@@ -18,6 +18,7 @@
 
 ## Architecture
 For this assignment, I would choose MVVM + data repository pattern given overall flow that UI depends on the data.
+![High Level Design](./IMG_0862.JPG "high level design")
 
 ### Model
 Data in this task is designed to be tiny POJO of `RestaurantEntry` and `RestaurantDetail` Once data is fetched it will be persisted to local SQLite DB using [Room](https://developer.android.com/topic/libraries/architecture/room.html). If new fetch happens and only if there are delta it will update local DB.
