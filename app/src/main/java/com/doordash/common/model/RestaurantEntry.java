@@ -10,9 +10,9 @@ public interface RestaurantEntry {
 
     String getDescription();
 
-    String getCoverImageUril();
+    String getCoverImageUrl();
 
-    String getStatue();
+    String getStatus();
 
     String getDeliveryFee();
 }
