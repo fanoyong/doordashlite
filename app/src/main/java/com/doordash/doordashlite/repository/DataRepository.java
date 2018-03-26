@@ -13,6 +13,8 @@ import com.doordash.doordashlite.db.entity.RestaurantEntryEntity;
 import java.io.IOException;
 import java.util.List;
 
+import retrofit2.Response;
+
 /**
  * Main data repository for {@link RestaurantDetailEntity} and {@link RestaurantEntryEntity}
  */
@@ -62,16 +64,15 @@ public class DataRepository {
         Log.v(TAG, "fetchDataFromServer");
         mAppExecutors.networkIO().execute(() -> {
             // TODO Come up with general coordinate get
-            List<RestaurantEntryEntity> restaurants = null;
             try {
-                restaurants = mDoorDashApi.getRestaurants(37.422740, -122.139956).execute().body();
-                Log.v(TAG, "size:" + restaurants.size());
+                Response<List<RestaurantEntryEntity>> response = mDoorDashApi.getRestaurants(37.422740, -122.139956).execute();
+                if (response != null && response.isSuccessful()) {
+                    Log.v(TAG, "size:" + response.body().size());
+                    mDatabase.entryDao().insertAll(response.body());
+                }
             } catch (IOException e) {
+                Log.e(TAG, "fetchDataFromServer:IOException:" + e.getMessage());
                 // no-op
-            }
-
-            if (restaurants != null) {
-                mDatabase.entryDao().insertAll(restaurants);
             }
         });
     }

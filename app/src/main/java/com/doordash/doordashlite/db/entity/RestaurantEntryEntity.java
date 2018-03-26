@@ -40,9 +40,9 @@ public class RestaurantEntryEntity implements RestaurantEntry {
 
     @ColumnInfo(name = "averageRating")
     @SerializedName("average_rating")
-    private Double mAverageRating;
+    private String mAverageRating;
 
-    public RestaurantEntryEntity(Integer id, String name, String description, String coverImageUrl, String status, String deliveryFee, Double averageRating) {
+    public RestaurantEntryEntity(int id, String name, String description, String coverImageUrl, String status, String deliveryFee, String averageRating) {
         mId = id;
         mName = name;
         mDescription = description;
@@ -57,7 +57,7 @@ public class RestaurantEntryEntity implements RestaurantEntry {
     }
 
     @Override
-    public Integer getId() {
+    public int getId() {
         return mId;
     }
 
@@ -107,12 +107,12 @@ public class RestaurantEntryEntity implements RestaurantEntry {
         return mDeliveryFee;
     }
 
-    public void setAverageRating(Double averageRating) {
-        mAverageRating = averageRating;
+    public void setAverageRating(String averageRating) {
+        mAverageRating = "☆" + averageRating;
     }
 
     @Override
-    public Double getAverageRating() {
+    public String getAverageRating() {
         return mAverageRating;
     }
 }

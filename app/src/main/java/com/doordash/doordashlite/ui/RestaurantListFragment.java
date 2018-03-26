@@ -43,6 +43,7 @@ public class RestaurantListFragment extends Fragment {
                 viewModel =
                 ViewModelProviders.of(this).get(RestaurantListViewModel.class);
         ((DoorDashLiteApplication) getActivity().getApplication()).getRepository().fetchDataFromServer();
+
         subscribeUi(viewModel);
     }
 

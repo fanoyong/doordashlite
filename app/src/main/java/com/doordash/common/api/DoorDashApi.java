@@ -20,15 +20,15 @@ public interface DoorDashApi {
      * @param latitude  GPS latitude
      * @param longitude GPS longitude
      */
-    @GET("v2/restaurant/")
-    Call<List<RestaurantEntryEntity>> getRestaurants(@Query("lat") double latitude, @Query("lng") double longitude);
+    @GET("restaurant/")
+    Call<List<RestaurantEntryEntity>> getRestaurants(@Query("lat") Double latitude, @Query("lng") Double longitude);
 
     /**
      * Get detailed information for given restaurant id
      *
      * @param id restaurant id
      */
-    @GET("v2/restaurant/{id}/")
+    @GET("restaurant/{id}/")
     Call<RestaurantEntryEntity> getRestaurant(@Path("id") String id);
 
 }

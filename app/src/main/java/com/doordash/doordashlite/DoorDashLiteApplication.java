@@ -35,7 +35,7 @@ public class DoorDashLiteApplication extends Application {
     public DoorDashApi getDoorDashApi() {
         if (mDoorDashApi == null) {
             mDoorDashApi = new Retrofit.Builder()
-                    .baseUrl("https://api.doordash.com/")
+                    .baseUrl("https://api.doordash.com/v2/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(new OkHttpClient())
                     .build()

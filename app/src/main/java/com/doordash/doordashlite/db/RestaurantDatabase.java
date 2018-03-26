@@ -18,7 +18,7 @@ import com.doordash.doordashlite.db.entity.RestaurantEntryEntity;
 
 import java.util.List;
 
-@Database(entities = {RestaurantEntryEntity.class, RestaurantDetailEntity.class}, version = 1, exportSchema = false)
+@Database(entities = {RestaurantEntryEntity.class, RestaurantDetailEntity.class}, version = 2, exportSchema = false)
 public abstract class RestaurantDatabase extends RoomDatabase {
     private static RestaurantDatabase sInstance;
     @VisibleForTesting

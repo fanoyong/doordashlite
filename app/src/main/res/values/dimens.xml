@@ -3,4 +3,6 @@
     <dimen name="item_horizontal_margin">8dp</dimen>
     <dimen name="cardView_round_radius">5dp</dimen>
     <dimen name="activity_horizontal_margin">8dp</dimen>
+    <dimen name="image_size">60dp</dimen>
+    <dimen name="margin_small_textview">2dp</dimen>
 </resources>

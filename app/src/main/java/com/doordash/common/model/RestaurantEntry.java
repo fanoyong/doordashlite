@@ -4,7 +4,7 @@ package com.doordash.common.model;
  * Model for summarized restaurant information to be used for list UI
  */
 public interface RestaurantEntry {
-    Integer getId();
+    int getId();
 
     String getName();
 
@@ -16,5 +16,5 @@ public interface RestaurantEntry {
 
     String getDeliveryFee();
 
-    Double getAverageRating();
+    String getAverageRating();
 }

@@ -16,5 +16,6 @@ public interface RestaurantDetail {
 
     String getDeliveryFee();
 
+    String getAverageRating();
     // TODO Add more fields
 }

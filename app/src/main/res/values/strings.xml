@@ -4,4 +4,8 @@
     <string name="cd_restaurant_detail_container">Restaurant detail container</string>
     <string name="loading_restaurants">Loading…</string>
     <string name="cd_list_of_restaurant">List of restaurants</string>
+    <string name="cd_average_rating">Average rating</string>
+    <string name="cd_status">Status</string>
+    <string name="cd_delivery_fee">Delivery fee</string>
+    <string name="cd_description">Description</string>
 </resources>
