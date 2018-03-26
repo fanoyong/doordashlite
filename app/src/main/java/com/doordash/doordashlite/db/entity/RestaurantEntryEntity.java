@@ -5,6 +5,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
 import com.doordash.common.model.RestaurantEntry;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Contract for {@link RestaurantEntry} and Room
@@ -14,25 +15,41 @@ public class RestaurantEntryEntity implements RestaurantEntry {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
+    @SerializedName("id")
     private int mId;
+
     @ColumnInfo(name = "name")
+    @SerializedName("name")
     private String mName;
+
     @ColumnInfo(name = "description")
+    @SerializedName("description")
     private String mDescription;
+
     @ColumnInfo(name = "coverImageUrl")
+    @SerializedName("cover_img_url")
     private String mCoverImageUrl;
+
     @ColumnInfo(name = "status")
+    @SerializedName("status")
     private String mStatus;
+
     @ColumnInfo(name = "deliveryFee")
+    @SerializedName("delivery_fee")
     private String mDeliveryFee;
 
-    public RestaurantEntryEntity(int id, String name, String description, String coverImageUrl, String status, String deliveryFee) {
+    @ColumnInfo(name = "averageRating")
+    @SerializedName("average_rating")
+    private Double mAverageRating;
+
+    public RestaurantEntryEntity(Integer id, String name, String description, String coverImageUrl, String status, String deliveryFee, Double averageRating) {
         mId = id;
         mName = name;
         mDescription = description;
         mCoverImageUrl = coverImageUrl;
         mStatus = status;
         mDeliveryFee = deliveryFee;
+        mAverageRating = averageRating;
     }
 
     public void setId(int id) {
@@ -40,7 +57,7 @@ public class RestaurantEntryEntity implements RestaurantEntry {
     }
 
     @Override
-    public int getId() {
+    public Integer getId() {
         return mId;
     }
 
@@ -72,14 +89,17 @@ public class RestaurantEntryEntity implements RestaurantEntry {
         return mCoverImageUrl;
     }
 
+    public void setStatus(String status) {
+        mStatus = status;
+    }
+
     @Override
     public String getStatus() {
         return mStatus;
     }
 
-
-    public void setStatus(String status) {
-        mStatus = status;
+    public void setDeliveryFee(String deliveryFee) {
+        mDeliveryFee = deliveryFee;
     }
 
     @Override
@@ -87,8 +107,12 @@ public class RestaurantEntryEntity implements RestaurantEntry {
         return mDeliveryFee;
     }
 
+    public void setAverageRating(Double averageRating) {
+        mAverageRating = averageRating;
+    }
 
-    public void setDeliveryFee(String deliveryFee) {
-        mDeliveryFee = deliveryFee;
+    @Override
+    public Double getAverageRating() {
+        return mAverageRating;
     }
 }

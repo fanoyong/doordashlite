@@ -4,10 +4,18 @@ package com.doordash.doordashlite;
 import android.app.Application;
 
 import com.doordash.common.AppExecutors;
+import com.doordash.common.api.DoorDashApi;
 import com.doordash.doordashlite.db.RestaurantDatabase;
+import com.doordash.doordashlite.repository.DataRepository;
 
-public class DoorDashLiteApplication extends Application{
+import okhttp3.OkHttpClient;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+public class DoorDashLiteApplication extends Application {
     private AppExecutors mAppExecutors;
+
+    private DoorDashApi mDoorDashApi;
 
     @Override
     public void onCreate() {
@@ -16,15 +24,23 @@ public class DoorDashLiteApplication extends Application{
         mAppExecutors = new AppExecutors();
     }
 
-    public AppExecutors getAppExecutors() {
-        return mAppExecutors;
-    }
-
     public RestaurantDatabase getDatabase() {
         return RestaurantDatabase.getInstance(this, mAppExecutors);
     }
 
     public DataRepository getRepository() {
-        return DataRepository.getInstance(getDatabase());
+        return DataRepository.getInstance(getDatabase(), mAppExecutors, getDoorDashApi());
+    }
+
+    public DoorDashApi getDoorDashApi() {
+        if (mDoorDashApi == null) {
+            mDoorDashApi = new Retrofit.Builder()
+                    .baseUrl("https://api.doordash.com/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(new OkHttpClient())
+                    .build()
+                    .create(DoorDashApi.class);
+        }
+        return mDoorDashApi;
     }
 }

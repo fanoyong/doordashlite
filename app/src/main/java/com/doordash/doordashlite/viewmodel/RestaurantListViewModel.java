@@ -23,9 +23,13 @@ public class RestaurantListViewModel extends AndroidViewModel {
 
         LiveData<List<RestaurantEntryEntity>>
                 restaurants =
-                ((DoorDashLiteApplication) application).getRepository().getRestaurants();
+                ((DoorDashLiteApplication) application).getRepository().getRestaurantEntry();
 
         // observe the changes of the restaurants from the database and forward them
         mObservableRestaurants.addSource(restaurants, mObservableRestaurants::setValue);
+    }
+
+    public LiveData<List<RestaurantEntryEntity>> getRestaurants() {
+        return mObservableRestaurants;
     }
 }

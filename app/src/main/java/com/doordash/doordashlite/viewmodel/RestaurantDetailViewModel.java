@@ -28,4 +28,8 @@ public class RestaurantDetailViewModel extends AndroidViewModel {
         // observe the changes of the restaurants from the database and forward them
         mObservableRestaurantDetail.addSource(restaurants, mObservableRestaurantDetail::setValue);
     }
+
+    public MediatorLiveData<List<RestaurantDetailEntity>> getRestaurantDetail() {
+        return mObservableRestaurantDetail;
+    }
 }

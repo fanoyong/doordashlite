@@ -5,7 +5,7 @@ android {
     buildToolsVersion build_versions.build_tools
 
     defaultConfig {
-        applicationId 'com.grammarly.avatarcontacts'
+        applicationId 'com.doordash.doordashlite'
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
         versionCode 1
@@ -51,6 +51,7 @@ dependencies {
 
     // Retrofit
     implementation deps.retrofit.runtime
+    implementation deps.retrofit.gson
 
     // Picasso
     implementation deps.picasso
