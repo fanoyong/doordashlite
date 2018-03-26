@@ -6,6 +6,10 @@
         <import type="android.view.View" />
 
         <variable
+            name="restaurant"
+            type="com.doordash.common.model.RestaurantDetail" />
+
+        <variable
             name="isLoading"
             type="boolean" />
     </data>
@@ -14,11 +18,81 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/restaurant_detail_container"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/cd_restaurant_detail_container"
-            android:orientation="vertical"></LinearLayout>
+            android:layout_height="match_parent">
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                app:visibleGone="@{isLoading}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="@string/loading_restaurants"
+                android:textAlignment="center" />
+
+            <LinearLayout
+                android:id="@+id/restaurant_detail_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/cd_restaurant_detail_container"
+                android:orientation="vertical">
+
+                <ImageView
+                    app:error="@{@android:drawable/stat_notify_error}"
+                    app:imageUrl="@{restaurant.coverImageUrl}"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:src="@android:drawable/stat_notify_error" />
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_medium_textview"
+                    android:contentDescription="@string/cd_name_of_the_restaurant"
+                    android:text="@{restaurant.name}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                <TextView
+                    android:id="@+id/phoneNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_medium_textview"
+                    android:contentDescription="@string/cd_phonenumber"
+                    android:text="@{restaurant.phoneNumber}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_medium_textview"
+                    android:contentDescription="@string/cd_description"
+                    android:text="@{restaurant.description}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                <TextView
+                    android:id="@+id/status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_medium_textview"
+                    android:contentDescription="@string/cd_status"
+                    android:text="@{restaurant.status}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                <TextView
+                    android:id="@+id/rating"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_medium_textview"
+                    android:contentDescription="@string/cd_average_rating"
+                    android:text="@{restaurant.averageRating}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            </LinearLayout>
+        </FrameLayout>
     </ScrollView>
 </layout>

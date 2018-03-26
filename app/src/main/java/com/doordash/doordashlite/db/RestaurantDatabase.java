@@ -67,16 +67,17 @@ public abstract class RestaurantDatabase extends RoomDatabase {
         mIsDatabaseCreated.postValue(true);
     }
 
-    private static void insertRestaurantDetail(final RestaurantDatabase database, final RestaurantDetailEntity restaurantDetailEntry) {
-        database.runInTransaction(() -> {
-            database.detailDao().insert(restaurantDetailEntry);
-        });
+    public void insertRestaurantDetail(final AppExecutors executors, final RestaurantDetailEntity restaurantDetailEntry) {
+        synchronized (RestaurantDatabase.class) {
+            executors.diskIO().execute(() -> runInTransaction(() -> detailDao().insert(restaurantDetailEntry)));
+        }
     }
 
-    private static void insertRestaurantList(final RestaurantDatabase database, final List<RestaurantEntryEntity> restaurantEntryEntities) {
-        database.runInTransaction(() -> {
-            database.entryDao().insertAll(restaurantEntryEntities);
-        });
+    public void insertRestaurantList(final AppExecutors executors, final List<RestaurantEntryEntity> restaurantEntryEntities) {
+        synchronized (RestaurantDatabase.class) {
+            executors.diskIO().execute(() -> runInTransaction(() -> entryDao().insertAll(restaurantEntryEntities)));
+
+        }
     }
 
     public LiveData<Boolean> getDatabaseCreated() {

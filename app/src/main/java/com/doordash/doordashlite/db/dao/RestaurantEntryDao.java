@@ -24,5 +24,5 @@ public interface RestaurantEntryDao {
     LiveData<List<RestaurantEntryEntity>> loadAllRestaurants();
 
     @Query("SELECT * FROM restaurant_entry WHERE id = :restaurantId")
-    RestaurantEntryEntity loadRestaurant(int restaurantId);
+    LiveData<RestaurantEntryEntity> loadRestaurant(int restaurantId);
 }

@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void show(RestaurantEntry restaurant) {
 
-        RestaurantDetailFragment restaurantDetailFragment = new RestaurantDetailFragment();
+        RestaurantDetailFragment restaurantDetailFragment = RestaurantDetailFragment.forRestaurant(restaurant.getId());
 
         getSupportFragmentManager()
                 .beginTransaction()

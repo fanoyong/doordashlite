@@ -33,18 +33,6 @@ public class DataRepository {
         mDatabase = database;
         mObservableRestaurantEntry = new MediatorLiveData<>();
         mObservableRestaurantDetail = new MediatorLiveData<>();
-
-        mObservableRestaurantEntry.addSource(mDatabase.entryDao().loadAllRestaurants(), restaurantEntryEntities -> {
-            if (mDatabase.getDatabaseCreated().getValue() != null) {
-                mObservableRestaurantEntry.postValue(restaurantEntryEntities);
-            }
-        });
-
-        mObservableRestaurantDetail.addSource(mDatabase.detailDao().loadAllRestaurants(), restaurantDetailEntities -> {
-            if (mDatabase.getDatabaseCreated().getValue() != null) {
-                mObservableRestaurantDetail.postValue(restaurantDetailEntities);
-            }
-        });
     }
 
     public static DataRepository getInstance(final RestaurantDatabase database, final AppExecutors appExecutors, final DoorDashApi doorDashApi) {
@@ -68,10 +56,40 @@ public class DataRepository {
                 Response<List<RestaurantEntryEntity>> response = mDoorDashApi.getRestaurants(37.422740, -122.139956).execute();
                 if (response != null && response.isSuccessful()) {
                     Log.v(TAG, "size:" + response.body().size());
-                    mDatabase.entryDao().insertAll(response.body());
+                    mDatabase.insertRestaurantList(mAppExecutors, response.body());
+                    mObservableRestaurantEntry.addSource(mDatabase.entryDao().loadAllRestaurants(), restaurantEntryEntities -> {
+                        if (mDatabase.getDatabaseCreated().getValue() != null) {
+                            Log.v(TAG, "fetchDataFromServer:post");
+                            mObservableRestaurantEntry.postValue(restaurantEntryEntities);
+                        }
+                    });
                 }
             } catch (IOException e) {
                 Log.e(TAG, "fetchDataFromServer:IOException:" + e.getMessage());
+                // no-op
+            }
+        });
+    }
+
+    public void fetchRestaurantFromServer(final int restaurantId) {
+        Log.v(TAG, "fetchRestaurantFromServer:" + restaurantId);
+        mAppExecutors.networkIO().execute(() -> {
+            try {
+                Response<RestaurantDetailEntity> response = mDoorDashApi.getRestaurant(restaurantId).execute();
+                if (response != null && response.isSuccessful()) {
+                    Log.v(TAG, "fetchRestaurantFromServer");
+                    mDatabase.insertRestaurantDetail(mAppExecutors, response.body());
+                    Log.v(TAG, "fetchRestaurantFromServer:" + response.body().getName());
+                    Log.v(TAG, "fetchRestaurantFromServer:" + response.body().getPhoneNumber());
+                    mObservableRestaurantDetail.addSource(mDatabase.detailDao().loadAllRestaurants(), restaurantDetailEntities -> {
+                        if (mDatabase.getDatabaseCreated().getValue() != null) {
+                            Log.v(TAG, "fetchRestaurantFromServer:post");
+                            mObservableRestaurantDetail.postValue(restaurantDetailEntities);
+                        }
+                    });
+                }
+            } catch (IOException e) {
+                Log.e(TAG, "fetchRestaurantFromServer:IOException:" + e.getMessage());
                 // no-op
             }
         });
@@ -81,7 +99,8 @@ public class DataRepository {
         return mObservableRestaurantEntry;
     }
 
-    public LiveData<List<RestaurantDetailEntity>> getRestaurantDetail() {
+    public LiveData<List<RestaurantDetailEntity>> getRestaurantDetail(int restaurantId) {
+        fetchRestaurantFromServer(restaurantId);
         return mObservableRestaurantDetail;
     }
 }

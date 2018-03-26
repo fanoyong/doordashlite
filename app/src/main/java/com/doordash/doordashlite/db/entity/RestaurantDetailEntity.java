@@ -22,6 +22,10 @@ public class RestaurantDetailEntity implements RestaurantDetail {
     @SerializedName("name")
     private String mName;
 
+    @ColumnInfo(name = "phoneNumber")
+    @SerializedName("phone_number")
+    private String mPhoneNumber;
+
     @ColumnInfo(name = "description")
     @SerializedName("description")
     private String mDescription;
@@ -68,6 +72,15 @@ public class RestaurantDetailEntity implements RestaurantDetail {
     @Override
     public String getName() {
         return mName;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        mPhoneNumber = phoneNumber;
+    }
+
+    @Override
+    public String getPhoneNumber() {
+        return mPhoneNumber;
     }
 
     public void setDescription(String description) {

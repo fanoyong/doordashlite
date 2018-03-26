@@ -8,4 +8,6 @@
     <string name="cd_status">Status</string>
     <string name="cd_delivery_fee">Delivery fee</string>
     <string name="cd_description">Description</string>
+    <string name="cd_phonenumber">Phonenumber</string>
+    <string name="cd_address">Address</string>
 </resources>

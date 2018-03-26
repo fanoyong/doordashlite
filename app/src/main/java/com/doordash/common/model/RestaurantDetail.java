@@ -8,6 +8,8 @@ public interface RestaurantDetail {
 
     String getName();
 
+    String getPhoneNumber();
+
     String getDescription();
 
     String getCoverImageUrl();

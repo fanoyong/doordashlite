@@ -14,6 +14,7 @@ import com.doordash.doordashlite.databinding.RestaurantDetailFragmentBinding;
 import com.doordash.doordashlite.viewmodel.RestaurantDetailViewModel;
 
 public class RestaurantDetailFragment extends Fragment {
+    private static final String KEY_RESTAURANT_ID = "restaurant_id";
     private RestaurantDetailFragmentBinding mBinding;
 
     @Nullable
@@ -21,7 +22,7 @@ public class RestaurantDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.restaurant_list_fragment, container, false);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.restaurant_detail_fragment, container, false);
 
         return mBinding.getRoot();
     }
@@ -29,9 +30,15 @@ public class RestaurantDetailFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        RestaurantDetailViewModel.Factory
+                factory =
+                new RestaurantDetailViewModel.Factory(getActivity().getApplication(),
+                        getArguments().getInt(KEY_RESTAURANT_ID));
+
         final RestaurantDetailViewModel
                 viewModel =
-                ViewModelProviders.of(this).get(RestaurantDetailViewModel.class);
+                ViewModelProviders.of(this, factory).get(RestaurantDetailViewModel.class);
 
         subscribeUi(viewModel);
     }
@@ -49,5 +56,13 @@ public class RestaurantDetailFragment extends Fragment {
             // sync.
             mBinding.executePendingBindings();
         });
+    }
+
+    public static RestaurantDetailFragment forRestaurant(int restaurantId) {
+        RestaurantDetailFragment fragment = new RestaurantDetailFragment();
+        Bundle args = new Bundle();
+        args.putInt(KEY_RESTAURANT_ID, restaurantId);
+        fragment.setArguments(args);
+        return fragment;
     }
 }

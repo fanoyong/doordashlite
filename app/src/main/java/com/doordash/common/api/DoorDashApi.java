@@ -29,7 +29,7 @@ public interface DoorDashApi {
      * @param id restaurant id
      */
     @GET("restaurant/{id}/")
-    Call<RestaurantEntryEntity> getRestaurant(@Path("id") String id);
+    Call<RestaurantDetailEntity> getRestaurant(@Path("id") int id);
 
 }
 
