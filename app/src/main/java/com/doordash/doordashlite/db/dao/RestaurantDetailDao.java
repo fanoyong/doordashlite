@@ -1,6 +1,7 @@
 package com.doordash.doordashlite.db.dao;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
@@ -13,14 +14,15 @@ import java.util.List;
 /**
  * Room's DAO for {@link RestaurantDetail}
  */
+@Dao
 public interface RestaurantDetailDao {
-    @Query("SELECT * FROM restaurants")
-    LiveData<List<RestaurantDetailEntity>> loadAllRestaurants();
-
     // Update if existing data has been updated
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(RestaurantDetailEntity restaurant);
 
-    @Query("SELECT * FROM restaurants WHERE id = :restaurantId")
+    @Query("SELECT * FROM restaurant_detail WHERE id = :restaurantId")
     RestaurantDetailEntity loadRestaurant(int restaurantId);
+
+    @Query("SELECT * FROM restaurant_detail")
+    LiveData<List<RestaurantDetailEntity>> loadAllRestaurants();
 }

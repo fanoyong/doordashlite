@@ -18,11 +18,11 @@ import com.doordash.doordashlite.db.entity.RestaurantEntryEntity;
 
 import java.util.List;
 
-@Database(entities = {RestaurantEntryDao.class, RestaurantDetailDao.class}, version = 1)
+@Database(entities = {RestaurantEntryEntity.class, RestaurantDetailEntity.class}, version = 1, exportSchema = false)
 public abstract class RestaurantDatabase extends RoomDatabase {
     private static RestaurantDatabase sInstance;
     @VisibleForTesting
-    public static final String DATABASE_NAME = "restaurants";
+    public static final String DATABASE_NAME = "restaurants_db";
 
     public abstract RestaurantEntryDao entryDao();
 

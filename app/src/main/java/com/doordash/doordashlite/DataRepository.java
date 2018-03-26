@@ -1,5 +1,6 @@
 package com.doordash.doordashlite;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
 
 import com.doordash.doordashlite.db.RestaurantDatabase;
@@ -44,5 +45,13 @@ public class DataRepository {
             }
         }
         return sInstance;
+    }
+
+    public LiveData<List<RestaurantEntryEntity>> getRestaurants() {
+        return mObservableRestaurantEntry;
+    }
+
+    public LiveData<List<RestaurantDetailEntity>> getRestaurantDetail() {
+        return mObservableRestaurantDetail;
     }
 }

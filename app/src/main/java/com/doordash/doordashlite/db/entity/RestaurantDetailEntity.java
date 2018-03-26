@@ -9,13 +9,13 @@ import com.doordash.common.model.RestaurantDetail;
 /**
  * Contract for {@link RestaurantDetail} and Room
  */
-@Entity(tableName = "contacts")
+@Entity(tableName = "restaurant_detail")
 public class RestaurantDetailEntity implements RestaurantDetail {
 
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    private String mId;
+    private int mId;
     @ColumnInfo(name = "name")
     private String mName;
     @ColumnInfo(name = "description")
@@ -27,7 +27,7 @@ public class RestaurantDetailEntity implements RestaurantDetail {
     @ColumnInfo(name = "deliveryFee")
     private String mDeliveryFee;
 
-    public RestaurantDetailEntity(String id, String name, String description, String coverImageUrl, String status, String deliveryFee) {
+    public RestaurantDetailEntity(int id, String name, String description, String coverImageUrl, String status, String deliveryFee) {
         mId = id;
         mName = name;
         mDescription = description;
@@ -36,12 +36,12 @@ public class RestaurantDetailEntity implements RestaurantDetail {
         mDeliveryFee = deliveryFee;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         mId = id;
     }
 
     @Override
-    public String getId() {
+    public int getId() {
         return mId;
     }
 

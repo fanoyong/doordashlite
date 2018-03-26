@@ -4,7 +4,7 @@ package com.doordash.common.model;
  * Model for detailed restaurant information.
  */
 public interface RestaurantDetail {
-    String getId();
+    int getId();
 
     String getName();
 

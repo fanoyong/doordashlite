@@ -31,12 +31,12 @@ In favor of utilizing Android's lifecycle aware callback view mode, ViewModel is
 ### View
 Using Android's [data binding library](https://developer.android.com/topic/libraries/data-binding/index.html), View is instantiated from its layout's variable. 
 - For initial `RecyclerView` (`RestaurantListFragment`) is bind from `restaurant_entry.xml`'s variable `restaurant_entry` and `callback`.
-- For detailed restaurant view, `RestaurantFragment` is bind from `restaurant_fragment.xml`'s variable `RestaurantDetailViewModel`.
+- For detailed restaurant view, `RestaurantFragment` is bind from `restaurant_detail_fragment.xml`'s variable `RestaurantDetailViewModel`.
 
 ## Plans
 1. Implement API and data persistent layer: First, define model, then create API to fetch data and associated data repository for models
 2. Implement skeleton UI/business logic for store list: create `RestaurantListFragment` that shows list of restaurant from given coordinate
-3. Implement skeleton UI/business logic for store detail: create `RestaurantFragment` that shows detailed information about restarurant
+3. Implement skeleton UI/business logic for store detail: create `RestaurantFragment` that shows detailed information about restaurant
 4. Add additional features:
 
     4.1 Sort (by TBD category)
