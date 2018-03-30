@@ -60,3 +60,11 @@ Following libraries were used while working on this task:
     - [ASTL](https://developer.android.com/topic/libraries/testing-support-library/index.html)
     - [Espresso](https://developer.android.com/training/testing/espresso/index.html)
     - [JUnit](https://developer.android.com/training/testing/unit-testing/local-unit-tests.html) and [Mockito](https://github.com/mockito/mockito)
+
+
+
+## New feature
+1. Create a feature that user can set favorite per each restaurant
+    - Add UI to list Fragment (and optinally restaurant detail UI)
+    - Persist
+

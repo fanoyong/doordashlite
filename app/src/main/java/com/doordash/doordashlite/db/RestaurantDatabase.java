@@ -18,7 +18,7 @@ import com.doordash.doordashlite.db.entity.RestaurantEntryEntity;
 
 import java.util.List;
 
-@Database(entities = {RestaurantEntryEntity.class, RestaurantDetailEntity.class}, version = 2, exportSchema = false)
+@Database(entities = {RestaurantEntryEntity.class, RestaurantDetailEntity.class}, version = 3, exportSchema = false)
 public abstract class RestaurantDatabase extends RoomDatabase {
     private static RestaurantDatabase sInstance;
     @VisibleForTesting
@@ -77,6 +77,12 @@ public abstract class RestaurantDatabase extends RoomDatabase {
         synchronized (RestaurantDatabase.class) {
             executors.diskIO().execute(() -> runInTransaction(() -> entryDao().insertAll(restaurantEntryEntities)));
 
+        }
+    }
+
+    public void updateRestaurant(final AppExecutors executors, final RestaurantEntryEntity restaurantEntryEntity) {
+        synchronized (RestaurantDatabase.class) {
+            executors.diskIO().execute(() -> runInTransaction(() -> entryDao().update(restaurantEntryEntity)));
         }
     }
 

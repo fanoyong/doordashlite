@@ -17,4 +17,6 @@ public interface RestaurantEntry {
     String getDeliveryFee();
 
     String getAverageRating();
+
+    boolean isFavorite();
 }

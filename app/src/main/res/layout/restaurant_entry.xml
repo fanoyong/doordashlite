@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="restaurant"
             type="com.doordash.common.model.RestaurantEntry" />
@@ -12,14 +14,18 @@
         <variable
             name="callback"
             type="com.doordash.doordashlite.ui.RestaurantClickCallback" />
+
+        <variable
+            name="callbackFavorite"
+            type="com.doordash.doordashlite.ui.FavoriteOnClickCallback" />
     </data>
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginEnd="@dimen/item_horizontal_margin"
         android:layout_marginStart="@dimen/item_horizontal_margin"
-        android:layout_gravity="center"
         android:gravity="center"
         android:minHeight="100dp"
         android:onClick="@{() ->  callback.onClick(restaurant)}"
@@ -92,6 +98,17 @@
                         android:maxLines="1"
                         android:text="@{restaurant.averageRating}"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+                    <ImageView
+                        android:id="@+id/favorite"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_small_textview"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/cd_favorite"
+                        android:onClick="@{(view) ->  callbackFavorite.onClick(view, restaurant)}"
+                        android:src="@android:drawable/btn_star_big_off"
+                        app:favorite="@{restaurant}" />
                 </LinearLayout>
 
             </LinearLayout>

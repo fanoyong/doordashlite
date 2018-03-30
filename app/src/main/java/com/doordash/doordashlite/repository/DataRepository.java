@@ -2,10 +2,12 @@ package com.doordash.doordashlite.repository;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.doordash.common.AppExecutors;
 import com.doordash.common.api.DoorDashApi;
+import com.doordash.common.model.RestaurantEntry;
 import com.doordash.doordashlite.db.RestaurantDatabase;
 import com.doordash.doordashlite.db.entity.RestaurantDetailEntity;
 import com.doordash.doordashlite.db.entity.RestaurantEntryEntity;
@@ -47,6 +49,27 @@ public class DataRepository {
         }
         return sInstance;
     }
+
+    private @Nullable
+    RestaurantEntryEntity getRestaurantEntryForId(int id) {
+        for (RestaurantEntryEntity restaurantEntryEntity : mObservableRestaurantEntry.getValue()) {
+            if (restaurantEntryEntity.getId() == id) {
+                return restaurantEntryEntity;
+            }
+        }
+        return null;
+    }
+
+
+    public void switchFavoriteAndUpdate(RestaurantEntry restaurant) {
+        final RestaurantEntryEntity restaurantEntryEntity = getRestaurantEntryForId(restaurant.getId());
+        if (restaurantEntryEntity != null) {
+            restaurantEntryEntity.setIsFavorite(!restaurantEntryEntity.isFavorite());
+            mDatabase.updateRestaurant(mAppExecutors, restaurantEntryEntity);
+            mObservableRestaurantEntry.setValue(mDatabase.entryDao().loadAllRestaurants().getValue());
+        }
+    }
+
 
     public void fetchDataFromServer() {
         Log.v(TAG, "fetchDataFromServer");

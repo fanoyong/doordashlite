@@ -10,4 +10,5 @@
     <string name="cd_description">Description</string>
     <string name="cd_phonenumber">Phonenumber</string>
     <string name="cd_address">Address</string>
+    <string name="cd_favorite">Favorite</string>
 </resources>

@@ -4,7 +4,6 @@ import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -15,12 +14,16 @@ import com.doordash.doordashlite.databinding.RestaurantEntryBinding;
 import java.util.List;
 
 public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAdapter.RestaurantEntryViewHolder> {
+    private static final String TAG = "RestaurantListAdapter";
     List<? extends RestaurantEntry> mRestaurantList;
     @Nullable
     private final RestaurantClickCallback mRestaurantClickCallback;
+    private final FavoriteOnClickCallback mFavoriteOnClickCallback;
 
-    public RestaurantListAdapter(@Nullable RestaurantClickCallback clickCallback) {
+
+    public RestaurantListAdapter(@Nullable RestaurantClickCallback clickCallback, FavoriteOnClickCallback favoriteOnClickCallback) {
         mRestaurantClickCallback = clickCallback;
+        mFavoriteOnClickCallback = favoriteOnClickCallback;
     }
 
     public void setRestaurantEntryList(final List<? extends RestaurantEntry> restaurantList) {
@@ -42,20 +45,12 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
                 @Override
                 public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
                     return mRestaurantList.get(oldItemPosition).getId() ==
-                            restaurantList.get(newItemPosition).getId();
+                            mRestaurantList.get(newItemPosition).getId();
                 }
 
                 @Override
                 public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                    RestaurantEntry newRestaurantList = restaurantList.get(newItemPosition);
-                    RestaurantEntry oldRestaurantList = mRestaurantList.get(oldItemPosition);
-                    return newRestaurantList.getId() == oldRestaurantList.getId() &&
-                            TextUtils.equals(newRestaurantList.getName(), oldRestaurantList.getName()) &&
-                            TextUtils.equals(newRestaurantList.getCoverImageUrl(), oldRestaurantList.getCoverImageUrl()) &&
-                            TextUtils.equals(newRestaurantList.getDeliveryFee(), oldRestaurantList.getDeliveryFee()) &&
-                            TextUtils.equals(newRestaurantList.getDescription(), oldRestaurantList.getDescription()) &&
-                            TextUtils.equals(newRestaurantList.getStatus(), oldRestaurantList.getStatus());
-
+                    return false;
                 }
             });
             mRestaurantList = restaurantList;
@@ -73,6 +68,7 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
                         parent,
                         false);
         binding.setCallback(mRestaurantClickCallback);
+        binding.setCallbackFavorite(mFavoriteOnClickCallback);
         return new RestaurantEntryViewHolder(binding);
     }
 
@@ -96,4 +92,6 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
             mBinding = binding;
         }
     }
+
+
 }

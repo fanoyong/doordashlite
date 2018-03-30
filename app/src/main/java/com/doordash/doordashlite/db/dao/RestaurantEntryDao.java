@@ -16,9 +16,12 @@ import java.util.List;
  */
 @Dao
 public interface RestaurantEntryDao {
-    // Update if existing data has been updated
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    // Ignore if existing data has been updated
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertAll(List<RestaurantEntryEntity> restaurants);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void update(RestaurantEntryEntity restaurant);
 
     @Query("SELECT * FROM restaurant_entry")
     LiveData<List<RestaurantEntryEntity>> loadAllRestaurants();

@@ -30,7 +30,7 @@ public class RestaurantListFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.restaurant_list_fragment, container, false);
 
-        mRestaurantListAdapter = new RestaurantListAdapter(mRestaurantClickCallback);
+        mRestaurantListAdapter = new RestaurantListAdapter(mRestaurantClickCallback, mFavoriteClickCallback);
         mBinding.restaurantList.setAdapter(mRestaurantListAdapter);
 
         return mBinding.getRoot();
@@ -39,15 +39,16 @@ public class RestaurantListFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        ((DoorDashLiteApplication) getActivity().getApplication()).getRepository().fetchDataFromServer();
+
+        subscribeUi();
+    }
+
+    private void subscribeUi() {
         final RestaurantListViewModel
                 viewModel =
                 ViewModelProviders.of(this).get(RestaurantListViewModel.class);
-        ((DoorDashLiteApplication) getActivity().getApplication()).getRepository().fetchDataFromServer();
-
-        subscribeUi(viewModel);
-    }
-
-    private void subscribeUi(RestaurantListViewModel viewModel) {
         // Update the list when the data changes
         viewModel.getRestaurants().observe(this, restaurants -> {
             if (restaurants != null) {
@@ -68,6 +69,15 @@ public class RestaurantListFragment extends Fragment {
 
         if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
             ((MainActivity) getActivity()).show(restaurant);
+        }
+    };
+
+    private final FavoriteOnClickCallback mFavoriteClickCallback = (view, restaurantEntry) -> {
+        if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
+            Log.v(TAG, "mFavoriteClickCallback:before:" + restaurantEntry.isFavorite());
+            ((DoorDashLiteApplication) getActivity().getApplication()).getRepository().switchFavoriteAndUpdate(restaurantEntry);
+            Log.v(TAG, "mFavoriteClickCallback:after:" + restaurantEntry.isFavorite());
+            subscribeUi();
         }
     };
 }

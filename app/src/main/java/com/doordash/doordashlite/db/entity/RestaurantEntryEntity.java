@@ -42,6 +42,10 @@ public class RestaurantEntryEntity implements RestaurantEntry {
     @SerializedName("average_rating")
     private String mAverageRating;
 
+    @ColumnInfo(name = "isFavorite")
+    @SerializedName("is_favorite")
+    private boolean mIsFavorite;
+
     public RestaurantEntryEntity(int id, String name, String description, String coverImageUrl, String status, String deliveryFee, String averageRating) {
         mId = id;
         mName = name;
@@ -114,5 +118,14 @@ public class RestaurantEntryEntity implements RestaurantEntry {
     @Override
     public String getAverageRating() {
         return mAverageRating;
+    }
+
+    public void setIsFavorite(boolean favorite) {
+        mIsFavorite = favorite;
+    }
+
+    @Override
+    public boolean isFavorite() {
+        return mIsFavorite;
     }
 }
